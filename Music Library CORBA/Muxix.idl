@@ -1,0 +1,48 @@
+module MuxixApp
+{  
+typedef double doubleshow[6];
+typedef double doubleprice[6];
+typedef double doubleitem[6];
+
+typedef string stringorder[6];
+typedef string stringartist[6];
+typedef string stringalbum[6];
+typedef string stringcompany[6];
+typedef string stringsongs[6][5];
+
+typedef sequence<double> doublerem;
+typedef sequence<double> doublen1;
+typedef sequence<double> doubleqty1;
+
+
+interface Muxix
+{
+
+doubleshow show();
+doubleprice getPrice();
+doubleitem getItems();
+
+string Borrow(in double choice,in doublerem remaining);
+string ReturnMusic(in double c1,in doublen1 n1,in doubleqty1 qty1);
+
+stringorder orderDetails();
+stringartist getArtist();
+stringalbum getAlbum();
+stringcompany getCompany();
+stringsongs getSongs();
+
+
+//public int[] show() throws RemoteException;
+//public String Borrow(int choice,int remaining[]) throws RemoteException; 
+//public String ReturnMusic(int c1,int n1[],int qty1[]) throws RemoteException; 
+//public String[] orderDetails() throws RemoteException;
+//public String[] getArtist() throws RemoteException;
+//public String[] getAlbum() throws RemoteException;
+//public String[] getCompany() throws RemoteException;
+//public int[] getItems() throws RemoteException;
+//public int[] getPrice() throws RemoteException;
+//public String[][] getSongs() throws RemoteException;
+
+oneway void shutdown();
+};
+};
