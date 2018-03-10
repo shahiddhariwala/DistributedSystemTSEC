@@ -1,0 +1,105 @@
+import java.rmi.Naming;
+import java.util.*;
+public class Client
+ {
+	public static void main(String args[])
+	{
+		try
+		{
+			Inter ai=(Inter)Naming.lookup("//localhost/Implement");
+			String name;
+			String city;
+			int rollno;
+			Scanner s= new Scanner(System.in);
+			System.out.println("\n\nPlease provide your Details to Login");
+			System.out.println("\nEnter your name:");
+			name=s.nextLine();
+			System.out.println("\nEnter city:");
+			city=s.nextLine();
+			System.out.println("\nEnter Roll Number: ");
+			rollno=s.nextInt();
+			System.out.println("\nYou have successfully logged in.\nEnjoy TSEC Library Service\n");			
+			//ArrayList<String> products=new ArrayList<String>();
+			//products.add("Shirts");products.add("Iphone");products.add("HPLaptops");products.add("LEECopper");products.add("Jeans");products.add("Watches");
+			String products[]=new String[7];
+			String albums[]=new String[7];
+			String artist[]=new String[7];
+			String company[]=new String[7];
+			int items[]=new int[10];
+			int prices[]=new int[10];
+			String msg1,msg2;
+			products=ai.orderDetails();
+			albums=ai.getAlbum();
+			artist=ai.getArtist();
+			company=ai.getCompany();
+			items=ai.getItems();
+			prices=ai.getPrice();
+		
+			System.out.println("\n1.Show List of Music Album Available:");
+			System.out.println("2.Purchase Music Album");
+			System.out.println("3.Return Music Album");
+			System.out.println("4.Show Details");
+			System.out.println("5.Log Out\n");
+			int ch,c,l=0;
+			int qty[]=new int[10];
+			for(l=0;l<products.length;l++){
+				qty[l]=0;
+			}
+			int n[]=new int[10];
+			//int z[]=new int[10];
+			for(l=0;l<6;l++){
+				n[l]=0;
+			}
+			int x[]=new int[10];
+			do
+			{
+				System.out.println("\nEnter your choice (i.e 1 or 2 or 3 or 4 or 5)\n\n");
+				ch=s.nextInt();
+				switch(ch)
+				{
+					case 1: x=ai.show();
+							for(l=0;l<products.length;l++){
+								System.out.println(l+":"+products[l]+"Artist =>"+artist[l]+"Album =>"+albums[l]+"Company =>"+company[l]+"Price =>"+prices[l]+"||Albums Available=> "+x[l]);
+							}
+							break;
+					case 2: System.out.println("\nWhich Album do u want to Borrow (Enter Album number)? \n");
+							c=s.nextInt();
+							System.out.println("\nHow Many Album Do you want to Borrow ?\n");
+							qty[c]=s.nextInt();
+							msg1=ai.Borrow(c,qty);
+							System.out.println(msg1);
+							break;
+					case 3: System.out.println("\nEnter which Album is to be Returned(Enter Album number)?\n");
+							c=s.nextInt();						
+							System.out.println("\nEnter Number of quantity to be Returned\n");
+							n[c]=s.nextInt();
+							msg2=ai.ReturnMusic(c,n,qty);
+							System.out.println(msg2);
+							break;
+					case 4: 
+							for(l=0;l<products.length;l++)
+							{
+								qty[l]=qty[l]-n[l];
+							}
+							System.out.println("Name: "+name);
+							System.out.println("City: "+city);
+							//System.out.println("Roll Number : "+rollno);
+							for(l=0;l<products.length;l++)
+							{
+								if(qty[l]!=0 && qty[l]>=0)
+								{
+								System.out.println("\nMusic : "+products[l]+"     ||      Number of Music Album Purchased => "+qty[l]);
+								}
+							}
+							break;
+					case 5: System.out.println(name+" Thank You For Using Shahid Music Library Services\n");
+							break;
+				}
+			}while(ch!=5);
+		}
+		catch(Exception e)
+		{
+			System.out.println("Client Exception: "+e);
+		}
+	}
+}
